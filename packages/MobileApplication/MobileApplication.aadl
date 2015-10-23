@@ -87,9 +87,9 @@ public
 	
 	subprogram implementation login_result_handler_function.impl	
 		connections
-			deserializeSuccess: parameter login_result.success -> success;
-			deserializeFailureMessage: parameter login_result.failure_message -> failure_message;
-			deserializeUser: parameter login_result.user -> user;
+			deserialize_success: parameter login_result.success -> success;
+			deserialize_failure_message: parameter login_result.failure_message -> failure_message;
+			deserialize_user: parameter login_result.user -> user;
 	end login_result_handler_function.impl;
 	
 	subprogram redirect_if_success_saving_user	
@@ -151,7 +151,7 @@ public
 		subcomponents
 			login_result_handler_process: process login_result_handler_process.impl;
 		connections
-			login_result_to_thread: port login_result -> login_result_handler_process.login_result;
+			login_result_to_process: port login_result -> login_result_handler_process.login_result;
 	end login_result_handler.impl;
 	
 end MobileApplication;

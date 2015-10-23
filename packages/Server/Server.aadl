@@ -1,6 +1,100 @@
 package Server
 public
-	with Shared;
+	with Shared, Base_Types;
+	
+	subprogram deserialize_login_request
+		features
+			login_request: in parameter Shared::user_login_request.impl;
+			username: out parameter Base_Types::String;
+			password: out parameter Base_Types::String;
+	end deserialize_login_request;
+	
+	subprogram implementation deserialize_login_request.impl
+		connections
+			deserialize_username: parameter login_request.username -> username;
+			deserialize_password: parameter login_request.password -> password;
+	end deserialize_login_request.impl;
+	
+	subprogram lookup_username
+		features
+			username: in parameter Base_Types::String;
+			success: out parameter Base_Types::Boolean;
+			failure_message: out parameter Base_Types::String;
+			user: out parameter Shared::user.impl;
+	end lookup_username;
+	
+	subprogram implementation lookup_username.impl		
+	end lookup_username.impl;
+	
+	subprogram check_password
+		features
+			success_in: in parameter Base_Types::Boolean;
+			failure_message_in: in parameter Base_Types::String;
+			user_in: in parameter Shared::user.impl;
+			password: in parameter Base_Types::String;
+			success: out parameter Base_Types::Boolean;
+			failure_message: out parameter Base_Types::String;
+			user: out parameter Shared::user.impl;
+	end check_password;
+	
+	subprogram implementation check_password.impl
+	end check_password.impl;
+	
+	subprogram create_login_result
+		features
+			success: in parameter Base_Types::Boolean;
+			failure_message: in parameter Base_Types::String;
+			user: in parameter Shared::user.impl;
+			login_result: out parameter Shared::user_login_result.impl;
+	end create_login_result;
+	
+	subprogram implementation create_login_result.impl
+		connections
+			populate_success: parameter success -> login_result.success;
+			populate_failure_message: parameter failure_message -> login_result.failure_message;
+			populate_user: parameter user -> login_result.user;
+	end create_login_result.impl;
+	
+	thread login_handler_thread
+		features
+			login_request: in data port Shared::user_login_request.impl;
+			login_result: out data port Shared::user_login_result.impl;
+	end login_handler_thread;
+	
+	thread implementation login_handler_thread.impl
+		calls
+			functions: {
+				deserialize_login_request: subprogram deserialize_login_request.impl;
+				lookup_username: subprogram lookup_username.impl;
+				check_password: subprogram check_password.impl;
+				create_login_result: subprogram create_login_result.impl;
+			};
+		connections
+			login_request_to_deserializer: parameter login_request -> deserialize_login_request.login_request;
+			username_to_lookup: parameter deserialize_login_request.username -> lookup_username.username;
+			lookup_success_to_checker: parameter lookup_username.success -> check_password.success_in;
+			lookup_failure_message_to_checker: parameter lookup_username.failure_message -> check_password.failure_message_in;
+			lookup_user_to_checker: parameter lookup_username.user -> check_password.user_in;
+			password_to_checker: parameter deserialize_login_request.password -> check_password.password;
+			checker_success_to_builder: parameter check_password.success -> create_login_result.success;
+			checker_failure_message_to_builder: parameter check_password.failure_message -> create_login_result.failure_message;
+			checker_user_to_builder: parameter check_password.user -> create_login_result.user;
+			login_result_out: parameter create_login_result.login_result -> login_result;
+	end login_handler_thread.impl;
+	
+	process login_handler_process
+		features
+			login_request: in data port Shared::user_login_request.impl;
+			login_result: out data port Shared::user_login_result.impl;
+	end login_handler_process;
+	
+	process implementation login_handler_process.impl
+		subcomponents
+			login_handler_thread: thread login_handler_thread.impl;
+		connections
+			login_result_to_thread: port login_request -> login_handler_thread.login_request;
+			thread_to_login_result: port login_handler_thread.login_result -> login_result;
+	end login_handler_process.impl;
 	
 	system login_handler
 		features
@@ -9,7 +103,11 @@ public
 	end login_handler;
 	
 	system implementation login_handler.impl
-		
+		subcomponents
+			login_handler_process: process login_handler_process.impl;
+		connections
+			login_result_to_process: port login_request -> login_handler_process.login_request;
+			process_to_login_result: port login_handler_process.login_result -> login_result;
 	end login_handler.impl;
 	
 end Server;
