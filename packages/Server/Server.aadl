@@ -1,44 +1,15 @@
 package Server
 public
-	with Base_Types;
+	with Shared;
 	
-	system Server
-		
-	end Server;
-	
-	system implementation Server.impl
-		
-	end Server.impl;
-	
-	process login_task
-		
-	end login_task;
-	
-	thread login_thread
+	system login_handler
 		features
-			username: in data port Base_Types::String;
-			password: in data port Base_Types::String;
-			success: out data port Base_Types::Boolean;
-			failure_message: out data port Base_Types::String;
-			user: out data port Base_Types::Natural;
-	end login_thread;
+			login_request: in data port Shared::user_login_request.impl;
+			login_result: out data port Shared::user_login_result.impl;
+	end login_handler;
 	
-	thread implementation login_thread.impl
-		calls
-			login_calls: {
-				receive_login_request: subprogram receive_login_request;
-			};
-		connections
-			parameter1: parameter username ->  receive_login_request.email;
-	end login_thread.impl;
-	
-	subprogram receive_login_request
-		features
-			email: in parameter Base_Types::String;
-			password: in parameter Base_Types::String;
-			success: out parameter Base_Types::Boolean;
-			failure_message: out parameter Base_Types::String;
-			user: out parameter Base_Types::Natural;
-	end receive_login_request;
+	system implementation login_handler.impl
+		
+	end login_handler.impl;
 	
 end Server;

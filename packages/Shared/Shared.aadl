@@ -1,0 +1,34 @@
+package Shared
+public
+	with Base_Types;
+	
+	data user
+	end user;
+	
+	data implementation user.impl
+		subcomponents
+			id: data Base_Types::Integer;
+			username: data Base_Types::String;
+			password: data Base_Types::String;
+	end user.impl;
+	
+	data user_login_request
+	end user_login_request;
+	
+	data implementation user_login_request.impl
+		subcomponents
+			username: data Base_Types::String;
+			password: data Base_Types::String;
+	end user_login_request.impl;
+	
+	data user_login_result
+	end user_login_result;
+	
+	data implementation user_login_result.impl
+		subcomponents
+			success: data Base_Types::Boolean;
+			failure_message: data Base_Types::String;
+			user: data user.impl;
+	end user_login_result.impl;
+	
+end Shared;

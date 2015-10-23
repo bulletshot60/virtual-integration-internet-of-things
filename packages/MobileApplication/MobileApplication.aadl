@@ -1,58 +1,89 @@
 package MobileApplication
 public
-	with Base_Types;
+	with Base_Types, Shared;
 	
-	system MobileApplication
-		
-	end MobileApplication;
-	
-	system implementation MobileApplication.impl
-		
-	end MobileApplication.impl;
-	
-	device login_button
+	device username_field
 		features
-			login_event: out event port;
-	end login_button;
+			username: out data port Base_Types::String;
+	end username_field;
 	
-	process login_task
-		
-	end login_task;
+	device password_field
+		features
+			password: out data port Base_Types::String;
+	end password_field;
+	
+	subprogram create_login_request
+		features
+			username: in parameter Base_Types::String;
+			password: in parameter Base_Types::String;
+			login_request: out parameter Shared::user_login_request.impl;
+	end create_login_request;
+	
+	subprogram implementation create_login_request.impl
+		connections
+			populate_username: parameter username -> login_request.username;
+			populate_password: parameter password -> login_request.password;
+	end create_login_request.impl;
 	
 	thread login_thread
 		features
 			username: in data port Base_Types::String;
 			password: in data port Base_Types::String;
-			success: out data port Base_Types::Boolean;
-			failure_message: out data port Base_Types::String;
-			user: out data port Base_Types::Natural;
+			login_request: out data port Shared::user_login_request.impl;
 	end login_thread;
 	
 	thread implementation login_thread.impl
 		calls
-			login: {
-				send_login_to_server: subprogram send_login_to_server;
-				process_error_message: subprogram process_error_message;
+			functions: {
+				create_login_request: subprogram create_login_request.impl;
 			};
 		connections
-			parameter1: parameter username -> send_login_to_server.username;
-			parameter2: parameter password -> send_login_to_server.password;
-			return1: parameter send_login_to_server.success -> process_error_message.success;
+			username_to_function: parameter username -> create_login_request.username;
+			password_to_function: parameter password -> create_login_request.password;
+			function_to_login_request: parameter create_login_request.login_request -> login_request;
 	end login_thread.impl;
 	
-	subprogram send_login_to_server
+	process login_process
 		features
-			username: in parameter Base_Types::String;
-			password: in parameter Base_Types::String;
-			success: out parameter Base_Types::Boolean;
-			failure_message: out parameter Base_Types::String;
-			user: out parameter Base_Types::Natural;
-	end send_login_to_server;
+			username: in data port Base_Types::String;
+			password: in data port Base_Types::String;
+			login_request: out data port Shared::user_login_request.impl;
+	end login_process;
 	
-	subprogram process_error_message
+	process implementation login_process.impl
+		subcomponents
+			login_thread: thread login_thread.impl;
+		connections
+			username_to_thread: port username -> login_thread.username;
+			password_to_thread: port password -> login_thread.password;
+			thread_to_login_request: port login_thread.login_request -> login_request;
+	end login_process.impl;
+	
+	system login_request_generator
 		features
-			success: in parameter Base_Types::Boolean;
-			failure_message: in parameter Base_Types::String;
-	end process_error_message;
+			login_request: out data port Shared::user_login_request.impl;
+	end login_request_generator;
+	
+	system implementation login_request_generator.impl
+		subcomponents
+			username_field: device username_field;
+			password_field: device password_field;
+			login_process: process login_process.impl;
+		connections
+			username_field_to_process: port username_field.username -> login_process.username;
+			password_field_to_process: port password_field.password -> login_process.password;
+			login_request_out: port login_process.login_request -> login_request;
+	end login_request_generator.impl;
+	
+	--------------------------------------------------
+	
+	system login_result_handler
+		features
+			login_result: in data port Shared::user_login_result.impl;
+	end login_result_handler;
+	
+	system implementation login_result_handler.impl
+		
+	end login_result_handler.impl;
 	
 end MobileApplication;
