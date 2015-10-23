@@ -12,52 +12,52 @@ public
 			password: out data port Base_Types::String;
 	end password_field;
 	
-	subprogram create_login_request
+	subprogram login_request_generator_function
 		features
 			username: in parameter Base_Types::String;
 			password: in parameter Base_Types::String;
 			login_request: out parameter Shared::user_login_request.impl;
-	end create_login_request;
+	end login_request_generator_function;
 	
-	subprogram implementation create_login_request.impl
+	subprogram implementation login_request_generator_function.impl
 		connections
 			populate_username: parameter username -> login_request.username;
 			populate_password: parameter password -> login_request.password;
-	end create_login_request.impl;
+	end login_request_generator_function.impl;
 	
-	thread login_thread
+	thread login_request_generator_thread
 		features
 			username: in data port Base_Types::String;
 			password: in data port Base_Types::String;
 			login_request: out data port Shared::user_login_request.impl;
-	end login_thread;
+	end login_request_generator_thread;
 	
-	thread implementation login_thread.impl
+	thread implementation login_request_generator_thread.impl
 		calls
 			functions: {
-				create_login_request: subprogram create_login_request.impl;
+				login_request_generator_function: subprogram login_request_generator_function.impl;
 			};
 		connections
-			username_to_function: parameter username -> create_login_request.username;
-			password_to_function: parameter password -> create_login_request.password;
-			function_to_login_request: parameter create_login_request.login_request -> login_request;
-	end login_thread.impl;
+			username_to_function: parameter username -> login_request_generator_function.username;
+			password_to_function: parameter password -> login_request_generator_function.password;
+			function_to_login_request: parameter login_request_generator_function.login_request -> login_request;
+	end login_request_generator_thread.impl;
 	
-	process login_process
+	process login_request_generator_process
 		features
 			username: in data port Base_Types::String;
 			password: in data port Base_Types::String;
 			login_request: out data port Shared::user_login_request.impl;
-	end login_process;
+	end login_request_generator_process;
 	
-	process implementation login_process.impl
+	process implementation login_request_generator_process.impl
 		subcomponents
-			login_thread: thread login_thread.impl;
+			login_request_generator_thread: thread login_request_generator_thread.impl;
 		connections
-			username_to_thread: port username -> login_thread.username;
-			password_to_thread: port password -> login_thread.password;
-			thread_to_login_request: port login_thread.login_request -> login_request;
-	end login_process.impl;
+			username_to_thread: port username -> login_request_generator_thread.username;
+			password_to_thread: port password -> login_request_generator_thread.password;
+			thread_to_login_request: port login_request_generator_thread.login_request -> login_request;
+	end login_request_generator_process.impl;
 	
 	system login_request_generator
 		features
@@ -68,14 +68,79 @@ public
 		subcomponents
 			username_field: device username_field;
 			password_field: device password_field;
-			login_process: process login_process.impl;
+			login_request_generator_process: process login_request_generator_process.impl;
 		connections
-			username_field_to_process: port username_field.username -> login_process.username;
-			password_field_to_process: port password_field.password -> login_process.password;
-			login_request_out: port login_process.login_request -> login_request;
+			username_field_to_process: port username_field.username -> login_request_generator_process.username;
+			password_field_to_process: port password_field.password -> login_request_generator_process.password;
+			login_request_out: port login_request_generator_process.login_request -> login_request;
 	end login_request_generator.impl;
 	
 	--------------------------------------------------
+	
+	subprogram login_result_handler_function
+		features
+			login_result: in parameter Shared::user_login_result.impl;
+			success: out parameter Base_Types::Boolean;
+			failure_message: out parameter Base_Types::String;
+			user: out parameter Shared::user.impl;
+	end login_result_handler_function;
+	
+	subprogram implementation login_result_handler_function.impl	
+		connections
+			deserializeSuccess: parameter login_result.success -> success;
+			deserializeFailureMessage: parameter login_result.failure_message -> failure_message;
+			deserializeUser: parameter login_result.user -> user;
+	end login_result_handler_function.impl;
+	
+	subprogram redirect_if_success_saving_user	
+		features
+			success: in parameter Base_Types::Boolean;
+			user: in parameter Shared::user.impl;
+	end redirect_if_success_saving_user;
+	
+	subprogram implementation redirect_if_success_saving_user.impl		
+	end redirect_if_success_saving_user.impl;
+	
+	subprogram display_failure_message_if_not_success
+		features
+			success: in parameter Base_Types::Boolean;
+			failure_message: in parameter Base_Types::String;
+	end display_failure_message_if_not_success;
+	
+	subprogram implementation display_failure_message_if_not_success.impl
+	end display_failure_message_if_not_success.impl;
+	
+	thread login_result_handler_thread
+		features
+			login_result: in data port Shared::user_login_result.impl;
+	end login_result_handler_thread;
+	
+	thread implementation login_result_handler_thread.impl
+		calls
+			functions: {
+				login_result_handler_function: subprogram login_result_handler_function.impl;
+				redirect_if_success_saving_user: subprogram redirect_if_success_saving_user.impl;
+				display_failure_message_if_not_success: subprogram display_failure_message_if_not_success.impl;
+			};
+		connections
+			login_result_to_deserializer: parameter login_result -> login_result_handler_function.login_result;
+			success_to_redirect: parameter login_result_handler_function.success -> redirect_if_success_saving_user.success;
+			user_to_redirect: parameter login_result_handler_function.user -> redirect_if_success_saving_user.user;
+			success_to_display_errror: parameter login_result_handler_function.success -> display_failure_message_if_not_success.success;
+			failure_message_to_display_errror: parameter login_result_handler_function.failure_message -> display_failure_message_if_not_success.failure_message;
+	end login_result_handler_thread.impl;
+	
+	process login_result_handler_process
+		features
+			login_result: in data port Shared::user_login_result.impl;
+	end login_result_handler_process;
+	
+	process implementation login_result_handler_process.impl
+		subcomponents
+			login_result_handler_thread: thread login_result_handler_thread.impl;
+		connections
+			login_result_to_thread: port login_result -> login_result_handler_thread.login_result;
+	end login_result_handler_process.impl;
 	
 	system login_result_handler
 		features
@@ -83,7 +148,10 @@ public
 	end login_result_handler;
 	
 	system implementation login_result_handler.impl
-		
+		subcomponents
+			login_result_handler_process: process login_result_handler_process.impl;
+		connections
+			login_result_to_thread: port login_result -> login_result_handler_process.login_result;
 	end login_result_handler.impl;
 	
 end MobileApplication;
