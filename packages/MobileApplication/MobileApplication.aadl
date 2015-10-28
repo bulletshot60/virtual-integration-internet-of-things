@@ -12,6 +12,11 @@ public
 			password: out data port Base_Types::String;
 	end password_field;
 	
+	device rember_me_field
+			features
+					rememberMe:	out data port Base_Types::Boolean;
+	end rember_me_field;
+	
 	subprogram login_request_generator_function
 		features
 			username: in parameter Base_Types::String;
@@ -29,6 +34,7 @@ public
 		features
 			username: in data port Base_Types::String;
 			password: in data port Base_Types::String;
+			rememberMe: in data port Base_Types::Boolean;
 			login_request: out data port Shared::user_login_request.impl;
 	end login_request_generator_thread;
 	
@@ -47,6 +53,7 @@ public
 		features
 			username: in data port Base_Types::String;
 			password: in data port Base_Types::String;
+			rememberMe: in data port Base_Types::Boolean;
 			login_request: out data port Shared::user_login_request.impl;
 	end login_request_generator_process;
 	
@@ -56,6 +63,7 @@ public
 		connections
 			username_to_thread: port username -> login_request_generator_thread.username;
 			password_to_thread: port password -> login_request_generator_thread.password;
+			remember_me_to_thread: port rememberMe -> login_request_generator_thread.rememberMe;
 			thread_to_login_request: port login_request_generator_thread.login_request -> login_request;
 	end login_request_generator_process.impl;
 	
@@ -68,10 +76,13 @@ public
 		subcomponents
 			username_field: device username_field;
 			password_field: device password_field;
+			remember_me_field: device rember_me_field;
+			
 			login_request_generator_process: process login_request_generator_process.impl;
 		connections
 			username_field_to_process: port username_field.username -> login_request_generator_process.username;
 			password_field_to_process: port password_field.password -> login_request_generator_process.password;
+			remember_me_field_to_process: port remember_me_field.rememberMe -> login_request_generator_process.rememberMe;
 			login_request_out: port login_request_generator_process.login_request -> login_request;
 	end login_request_generator.impl;
 	
@@ -153,5 +164,9 @@ public
 		connections
 			login_result_to_process: port login_result -> login_result_handler_process.login_result;
 	end login_result_handler.impl;
+	
+
+	
+	
 	
 end MobileApplication;
