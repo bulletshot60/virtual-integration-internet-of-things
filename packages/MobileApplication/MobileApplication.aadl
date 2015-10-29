@@ -1,20 +1,26 @@
 package MobileApplication
 public
-	with Base_Types, Shared;
+	with Base_Types, Shared, Android_Properties;
 	
 	device username_field
 		features
 			username: out data port Base_Types::String;
+		properties
+			Android_Properties::android_type => InputBox;
 	end username_field;
 	
 	device password_field
 		features
 			password: out data port Base_Types::String;
+		properties
+			Android_Properties::android_type => PasswordInputBox;
 	end password_field;
 	
 	device rember_me_field
 			features
-					rememberMe:	out data port Base_Types::Boolean;
+				rememberMe:	out data port Base_Types::Boolean;
+			properties
+				Android_Properties::android_type => InputBox;
 	end rember_me_field;
 	
 	subprogram login_request_generator_function

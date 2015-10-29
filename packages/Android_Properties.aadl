@@ -1,0 +1,7 @@
+property set Android_Properties is
+	background_color: aadlstring applies to (device);
+	font_color: aadlstring applies to (device);
+	font_face: aadlstring applies to (device);
+	android_type: enumeration (InputBox, PasswordInputBox, Button, Checkbox) applies to (device);
+	background_image: aadlstring applies to (device);
+end Android_Properties;
