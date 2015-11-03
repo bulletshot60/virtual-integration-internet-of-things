@@ -20,7 +20,7 @@ public
 	subprogram login_request_generator_function
 		features
 			username: in parameter Base_Types::String;
-			password: in parameter Base_Types::String;
+			password: in parameter Base_Types::String; 
 			login_request: out parameter Shared::user_login_request.impl;
 	end login_request_generator_function;
 	
@@ -87,86 +87,5 @@ public
 	end login_request_generator.impl;
 	
 	--------------------------------------------------
-	
-	subprogram login_result_handler_function
-		features
-			login_result: in parameter Shared::user_login_result.impl;
-			success: out parameter Base_Types::Boolean;
-			failure_message: out parameter Base_Types::String;
-			user: out parameter Shared::user.impl;
-	end login_result_handler_function;
-	
-	subprogram implementation login_result_handler_function.impl	
-		connections
-			deserialize_success: parameter login_result.success -> success;
-			deserialize_failure_message: parameter login_result.failure_message -> failure_message;
-			deserialize_user: parameter login_result.user -> user;
-	end login_result_handler_function.impl;
-	
-	subprogram redirect_if_success_saving_user	
-		features
-			success: in parameter Base_Types::Boolean;
-			user: in parameter Shared::user.impl;
-	end redirect_if_success_saving_user;
-	
-	subprogram implementation redirect_if_success_saving_user.impl		
-	end redirect_if_success_saving_user.impl;
-	
-	subprogram display_failure_message_if_not_success
-		features
-			success: in parameter Base_Types::Boolean;
-			failure_message: in parameter Base_Types::String;
-	end display_failure_message_if_not_success;
-	
-	subprogram implementation display_failure_message_if_not_success.impl
-	end display_failure_message_if_not_success.impl;
-	
-	thread login_result_handler_thread
-		features
-			login_result: in data port Shared::user_login_result.impl;
-	end login_result_handler_thread;
-	
-	thread implementation login_result_handler_thread.impl
-		calls
-			functions: {
-				login_result_handler_function: subprogram login_result_handler_function.impl;
-				redirect_if_success_saving_user: subprogram redirect_if_success_saving_user.impl;
-				display_failure_message_if_not_success: subprogram display_failure_message_if_not_success.impl;
-			};
-		connections
-			login_result_to_deserializer: parameter login_result -> login_result_handler_function.login_result;
-			success_to_redirect: parameter login_result_handler_function.success -> redirect_if_success_saving_user.success;
-			user_to_redirect: parameter login_result_handler_function.user -> redirect_if_success_saving_user.user;
-			success_to_display_errror: parameter login_result_handler_function.success -> display_failure_message_if_not_success.success;
-			failure_message_to_display_errror: parameter login_result_handler_function.failure_message -> display_failure_message_if_not_success.failure_message;
-	end login_result_handler_thread.impl;
-	
-	process login_result_handler_process
-		features
-			login_result: in data port Shared::user_login_result.impl;
-	end login_result_handler_process;
-	
-	process implementation login_result_handler_process.impl
-		subcomponents
-			login_result_handler_thread: thread login_result_handler_thread.impl;
-		connections
-			login_result_to_thread: port login_result -> login_result_handler_thread.login_result;
-	end login_result_handler_process.impl;
-	
-	system login_result_handler
-		features
-			login_result: in data port Shared::user_login_result.impl;
-	end login_result_handler;
-	
-	system implementation login_result_handler.impl
-		subcomponents
-			login_result_handler_process: process login_result_handler_process.impl;
-		connections
-			login_result_to_process: port login_result -> login_result_handler_process.login_result;
-	end login_result_handler.impl;
-	
-
-	
-	
 	
 end MobileApplication;
