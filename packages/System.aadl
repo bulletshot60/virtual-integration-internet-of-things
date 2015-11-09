@@ -11,7 +11,7 @@ public
 			login_handler: system Server::login_handler.impl;
 			login_result_handler: system MobileApplication::login_result_handler.impl;
 		connections
-			login_request_to_server: port login_request_generator.login_request -> login_handler.login_request;
+			login_request_to_server_TB: port login_request_generator.login_request -> login_handler.login_request;
 			login_result_to_mobile_app: port login_handler.login_result -> login_result_handler.login_result;
 	end weather_alert_system.impl;
 	
