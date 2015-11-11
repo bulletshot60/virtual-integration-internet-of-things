@@ -1,0 +1,96 @@
+package LoginResultHandler
+public
+	with Shared, Base_Types;
+	
+	subprogram login_result_handler_function
+		features
+			loginResult: in parameter Shared::user_login_result.impl;
+			success: out parameter Base_Types::Boolean;
+			failureMessage: out parameter Base_Types::String;
+			user: out parameter Shared::user.impl;
+	end login_result_handler_function;
+	
+	subprogram implementation login_result_handler_function.impl	
+		connections
+			deserializeSuccess: parameter loginResult.success -> success;
+			deserializeFailure_message: parameter loginResult.failureMessage -> failureMessage;
+			deserializeUser: parameter loginResult.user -> user;
+	end login_result_handler_function.impl;
+	
+	subprogram redirect_if_success_saving_user	
+		features
+			success: in parameter Base_Types::Boolean;
+			rememberMe: in parameter Base_Types::Boolean;
+			user: in parameter Shared::user.impl;
+			startMainPage: out event port;
+	end redirect_if_success_saving_user;
+	
+	subprogram implementation redirect_if_success_saving_user.impl
+	end redirect_if_success_saving_user.impl;
+	
+	subprogram display_failure_message_if_not_success
+		features
+			success: in parameter Base_Types::Boolean;
+			failureMessage: in parameter Base_Types::String;
+	end display_failure_message_if_not_success;
+	
+	subprogram implementation display_failure_message_if_not_success.impl
+	end display_failure_message_if_not_success.impl;
+	
+	thread login_result_handler_thread
+		features
+			rememberMe: in data port Base_Types::Boolean;
+			loginResult: in data port Shared::user_login_result.impl;
+			startMainPage: out event port;
+	end login_result_handler_thread;
+	
+	thread implementation login_result_handler_thread.impl
+		calls
+			functions: {
+				loginResultHandlerFunction: subprogram login_result_handler_function.impl;
+				redirectIfSuccessSavingUser: subprogram redirect_if_success_saving_user.impl;
+				displayFailureMessageIfNotSuccess: subprogram display_failure_message_if_not_success.impl;
+			};
+		connections
+			rememberMeToRedirect: parameter rememberMe -> redirectIfSuccessSavingUser.rememberMe;
+			loginResultToDeserializer: parameter loginResult -> loginResultHandlerFunction.loginResult;
+			successToRedirect: parameter loginResultHandlerFunction.success -> redirectIfSuccessSavingUser.success;
+			userToRedirect: parameter loginResultHandlerFunction.user -> redirectIfSuccessSavingUser.user;
+			redirectToStartMainPage: port redirectIfSuccessSavingUser.startMainPage -> startMainPage;
+			successToDisplayErrror: parameter loginResultHandlerFunction.success -> displayFailureMessageIfNotSuccess.success;
+			failureMessageToDisplayErrror: parameter loginResultHandlerFunction.failureMessage -> displayFailureMessageIfNotSuccess.failureMessage;
+	end login_result_handler_thread.impl;
+	
+	process login_result_handler_process
+		features
+			rememberMe: in data port Base_Types::Boolean;
+			loginResult: in data port Shared::user_login_result.impl;
+			startMainPage: out event port;
+	end login_result_handler_process;
+	
+	process implementation login_result_handler_process.impl
+		subcomponents
+			loginResultHandlerThread: thread login_result_handler_thread.impl;
+		connections
+			rememberMeToThread: port rememberMe -> loginResultHandlerThread.rememberMe;
+			loginResultToThread: port loginResult -> loginResultHandlerThread.loginResult;
+			startMainPageOut: port loginResultHandlerThread.startMainPage -> startMainPage;
+	end login_result_handler_process.impl;
+	
+	system login_result_handler
+		features
+			rememberMe: in data port Base_Types::Boolean;
+			loginResult: in event data port Shared::user_login_result.impl;
+			startMainPage: out event port;
+	end login_result_handler;
+	
+	system implementation login_result_handler.impl
+		subcomponents
+			loginResultHandlerProcess: process login_result_handler_process.impl;
+		connections
+			rememberMeToProcess: port rememberMe -> loginResultHandlerProcess.rememberMe;
+			loginResultToProcess: port loginResult -> loginResultHandlerProcess.loginResult;
+			startMainPageOut: port loginResultHandlerProcess.startMainPage -> startMainPage;
+	end login_result_handler.impl;
+	
+end LoginResultHandler;

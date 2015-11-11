@@ -1,0 +1,68 @@
+package LoginRequestGenerator
+public
+	with Base_Types, Shared;
+	
+	subprogram login_request_generator_function
+		features
+			username: in parameter Base_Types::String;
+			password: in parameter Base_Types::String;
+			loginRequest: out parameter Shared::user_login_request.impl;
+	end login_request_generator_function;
+	
+	subprogram implementation login_request_generator_function.impl
+		connections
+			populateUsername: parameter username -> loginRequest.username;
+			populatePassword: parameter password -> loginRequest.password;
+	end login_request_generator_function.impl;
+	
+	thread login_request_generator_thread
+		features
+			username: in data port Base_Types::String;
+			password: in data port Base_Types::String;
+			loginRequest: out data port Shared::user_login_request.impl;
+	end login_request_generator_thread;
+	
+	thread implementation login_request_generator_thread.impl
+		calls
+			functions: {
+				loginRequestGeneratorFunction: subprogram login_request_generator_function.impl;
+			};
+		connections
+			usernameToFunction: parameter username -> loginRequestGeneratorFunction.username;
+			passwordToFunction: parameter password -> loginRequestGeneratorFunction.password;
+			functionToLoginRequest: parameter loginRequestGeneratorFunction.loginRequest -> loginRequest;
+	end login_request_generator_thread.impl;
+	
+	process login_request_generator_process
+		features
+			username: in data port Base_Types::String;
+			password: in data port Base_Types::String;
+			loginRequest: out data port Shared::user_login_request.impl;
+	end login_request_generator_process;
+	
+	process implementation login_request_generator_process.impl
+		subcomponents
+			loginRequestGeneratorThread: thread login_request_generator_thread.impl;
+		connections
+			usernameToThread: port username -> loginRequestGeneratorThread.username;
+			passwordToThread: port password -> loginRequestGeneratorThread.password;
+			threadToLoginRequest: port loginRequestGeneratorThread.loginRequest -> loginRequest;
+	end login_request_generator_process.impl;
+	
+	system login_request_generator
+		features
+			startRequest: in event port;
+			username: in data port Base_Types::String;
+			password: in data port Base_Types::String;
+			loginRequest: out data port Shared::user_login_request.impl;
+	end login_request_generator;
+	
+	system implementation login_request_generator.impl
+		subcomponents			
+			loginRequestGeneratorProcess: process login_request_generator_process.impl;
+		connections
+			usernameToProcess: port username -> loginRequestGeneratorProcess.username;
+			passwordToProcess: port password -> loginRequestGeneratorProcess.password;
+			login_request_out: port loginRequestGeneratorProcess.loginRequest -> loginRequest;
+	end login_request_generator.impl;
+end LoginRequestGenerator;
