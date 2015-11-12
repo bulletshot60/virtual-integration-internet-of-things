@@ -3,19 +3,25 @@ public
 	with MobileApplication, MobilePlatform, ServerPlatform, ServerApplication;
 	
 	system weather_alert_system
+		annex agree {**
+			guarantee "dummy": true;
+		**};
 	end weather_alert_system;
 	
 	system implementation weather_alert_system.impl
 		subcomponents
 			mobileApplication: system MobileApplication::mobile_application.impl;
-			mobilePlatform: system MobilePlatform::mobile_platform.impl;
-			serverPlatform: system ServerPlatform::server_platform.impl;
+			--mobilePlatform: system MobilePlatform::mobile_platform.impl;
+			--serverPlatform: system ServerPlatform::server_platform.impl;
 			serverApplication: system ServerApplication::server_application.impl;
-		connections
-			mobilePlatformToMobileApplication: port mobilePlatform.launchApplication -> mobileApplication.launchApplication;
-			systemPlatformToSystemApplication: port serverPlatform.launchApplication -> serverApplication.launchApplication;
-			mobileLoginToServer: port mobileApplication.loginRequest -> serverApplication.loginRequest;
-			serverToMobileLogin: port serverApplication.loginResponse -> mobileApplication.loginResponse;
+		--connections
+			--mobilePlatformToMobileApplication: port mobilePlatform.launchApplication -> mobileApplication.launchApplication;
+			--systemPlatformToSystemApplication: port serverPlatform.launchApplication -> serverApplication.launchApplication;
+			--mobileLoginToServer: port mobileApplication.loginRequest -> serverApplication.loginRequest;
+			--serverToMobileLogin: port serverApplication.loginResponse -> mobileApplication.loginResponse;
+		annex agree {**
+			assert true;
+		**};
 	end weather_alert_system.impl;
 	
 end WeatherAlertSystem;

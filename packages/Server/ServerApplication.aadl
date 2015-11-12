@@ -1,20 +1,29 @@
 package ServerApplication
 public
-	with Shared, LoginHandler;
+	with Shared, LoginHandler, Base_Types;
 	
 	system server_application
 		features
-			launchApplication: in event port;
-			loginRequest: in event data port Shared::user_login_request.impl;
-			loginResponse: out data port Shared::user_login_result.impl;
+			--launchApplication: in event port;
+			--loginRequest: in event data port Shared::user_login_request.impl;
+			--loginResponse: out data port Shared::user_login_result.impl;
+			communicatorIn: in data port Base_Types::Integer;
+			communicatorOut: out data port Base_Types::Integer;
+		annex agree {**
+			assume "in is 2": communicatorIn = 2;
+			guarantee "out is 1": communicatorOut = 1;
+		**};
 	end server_application;
 	
 	system implementation server_application.impl
-		subcomponents
-			loginHandler: system LoginHandler::login_handler.impl;
-		connections
-			loginRequestToLoginHandler: port loginRequest -> loginHandler.loginRequest;
-			loginHandlerToLoginResponse: port loginHandler.loginResult -> loginResponse;
+		--subcomponents
+			--loginHandler: system LoginHandler::login_handler.impl;
+		--connections
+			--loginRequestToLoginHandler: port loginRequest -> loginHandler.loginRequest;
+			--loginHandlerToLoginResponse: port loginHandler.loginResult -> loginResponse;
+		annex agree {**
+			assert communicatorOut = 3;
+		**};
 	end server_application.impl;
 	
 end ServerApplication;
