@@ -1,0 +1,13 @@
+package ServerPlatform
+public
+	
+	system server_platform
+		features
+			launchApplication: out event port;
+	end server_platform;
+	
+	system implementation server_platform.impl
+		
+	end server_platform.impl;
+	
+end ServerPlatform;

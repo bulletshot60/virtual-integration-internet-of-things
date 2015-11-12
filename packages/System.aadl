@@ -1,18 +1,27 @@
 package WeatherAlertSystem
 public
-	with MobileApplication, Server;
+	with MobileApplication, MobilePlatform, ServerPlatform, ServerApplication;
 	
 	system weather_alert_system
+		annex agree {**
+			guarantee "dummy": true;
+		**};
 	end weather_alert_system;
 	
 	system implementation weather_alert_system.impl
 		subcomponents
-			login_request_generator: system MobileApplication::login_request_generator.impl;
-			login_handler: system Server::login_handler.impl;
-			login_result_handler: system MobileApplication::login_result_handler.impl;
-		connections
-			login_request_to_server: port login_request_generator.login_request -> login_handler.login_request;
-			login_result_to_mobile_app: port login_handler.login_result -> login_result_handler.login_result;
+			mobileApplication: system MobileApplication::mobile_application.impl;
+			--mobilePlatform: system MobilePlatform::mobile_platform.impl;
+			--serverPlatform: system ServerPlatform::server_platform.impl;
+			serverApplication: system ServerApplication::server_application.impl;
+		--connections
+			--mobilePlatformToMobileApplication: port mobilePlatform.launchApplication -> mobileApplication.launchApplication;
+			--systemPlatformToSystemApplication: port serverPlatform.launchApplication -> serverApplication.launchApplication;
+			--mobileLoginToServer: port mobileApplication.loginRequest -> serverApplication.loginRequest;
+			--serverToMobileLogin: port serverApplication.loginResponse -> mobileApplication.loginResponse;
+		annex agree {**
+			assert true;
+		**};
 	end weather_alert_system.impl;
 	
 end WeatherAlertSystem;

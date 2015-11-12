@@ -1,0 +1,30 @@
+package MobileApplication
+public
+	with LoginScreen, Shared, Base_Types;
+	
+	system mobile_application
+		features
+			--launchApplication: in event port;
+			--loginRequest: out data port Shared::user_login_request.impl;
+			--loginResponse: in event data port Shared::user_login_result.impl;
+			communicatorIn: in data port Base_Types::Integer;
+			communicatorOut: out data port Base_Types::Integer;
+		annex agree {**
+			assume "in is 1": communicatorIn = 1;
+			guarantee "out is 2": communicatorOut = 2;
+		**};
+	end mobile_application;
+	
+	system implementation mobile_application.impl
+		--subcomponents
+			--loginScreen: system LoginScreen::login_screen.impl;
+		--connections
+			--launchApplicationToStartPage: port launchApplication -> loginScreen.startPage;
+			--loginPageToServer: port loginScreen.loginRequest -> loginRequest;
+			--serverToLoginPage: port loginResponse -> loginScreen.loginResponse;
+		annex agree {**
+			assert communicatorOut = 2;
+		**};
+	end mobile_application.impl;
+	
+end MobileApplication;

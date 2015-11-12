@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="ASCII"?>
+<instance:SystemInstance xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aadl2="http://aadl.info/AADL/2.0" xmlns:instance="http://aadl.info/AADL/2.0/instance" name="mobile_application_impl_Instance" category="system">
+  <featureInstance name="loginRequest" dstConnectionInstance="//@connectionInstance.2" direction="out">
+    <feature xsi:type="aadl2:DataPort" href="../MobileApplication.aadl#//@ownedPublicSection/@ownedClassifier.0/@ownedDataPort.0"/>
+  </featureInstance>
+  <featureInstance name="communicatorIn">
+    <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+      <property href="../../../../../Plugin_Resources/Data_Model.aadl#Data_Model.Data_Representation"/>
+      <ownedValue>
+        <ownedValue xsi:type="aadl2:NamedValue">
+          <namedValue xsi:type="aadl2:EnumerationLiteral" href="../../../../../Plugin_Resources/Data_Model.aadl#//@ownedProperty.4/@ownedPropertyType/@ownedLiteral.6"/>
+        </ownedValue>
+      </ownedValue>
+      <propertyAssociation href="../../../../../Plugin_Resources/Base_Types.aadl#//@ownedPublicSection/@ownedClassifier.1/@ownedPropertyAssociation.0"/>
+    </ownedPropertyAssociation>
+    <feature xsi:type="aadl2:DataPort" href="../MobileApplication.aadl#//@ownedPublicSection/@ownedClassifier.0/@ownedDataPort.1"/>
+  </featureInstance>
+  <featureInstance name="communicatorOut" direction="out">
+    <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+      <property href="../../../../../Plugin_Resources/Data_Model.aadl#Data_Model.Data_Representation"/>
+      <ownedValue>
+        <ownedValue xsi:type="aadl2:NamedValue">
+          <namedValue xsi:type="aadl2:EnumerationLiteral" href="../../../../../Plugin_Resources/Data_Model.aadl#//@ownedProperty.4/@ownedPropertyType/@ownedLiteral.6"/>
+        </ownedValue>
+      </ownedValue>
+      <propertyAssociation href="../../../../../Plugin_Resources/Base_Types.aadl#//@ownedPublicSection/@ownedClassifier.1/@ownedPropertyAssociation.0"/>
+    </ownedPropertyAssociation>
+    <feature xsi:type="aadl2:DataPort" href="../MobileApplication.aadl#//@ownedPublicSection/@ownedClassifier.0/@ownedDataPort.2"/>
+  </featureInstance>
+  <featureInstance name="launchApplication" srcConnectionInstance="//@connectionInstance.0" category="eventPort">
+    <feature xsi:type="aadl2:EventPort" href="../MobileApplication.aadl#//@ownedPublicSection/@ownedClassifier.0/@ownedEventPort.0"/>
+  </featureInstance>
+  <featureInstance name="loginResponse" srcConnectionInstance="//@connectionInstance.1" category="eventDataPort">
+    <feature xsi:type="aadl2:EventDataPort" href="../MobileApplication.aadl#//@ownedPublicSection/@ownedClassifier.0/@ownedEventDataPort.0"/>
+  </featureInstance>
+  <componentInstance name="loginScreen" category="system">
+    <featureInstance name="loginRequest" srcConnectionInstance="//@connectionInstance.2" direction="out">
+      <feature xsi:type="aadl2:DataPort" href="../LoginScreen.aadl#//@ownedPublicSection/@ownedClassifier.5/@ownedDataPort.0"/>
+    </featureInstance>
+    <featureInstance name="startPage" dstConnectionInstance="//@connectionInstance.0" category="eventPort">
+      <feature xsi:type="aadl2:EventPort" href="../LoginScreen.aadl#//@ownedPublicSection/@ownedClassifier.5/@ownedEventPort.0"/>
+    </featureInstance>
+    <featureInstance name="startSignupPage" category="eventPort" direction="out">
+      <feature xsi:type="aadl2:EventPort" href="../LoginScreen.aadl#//@ownedPublicSection/@ownedClassifier.5/@ownedEventPort.1"/>
+    </featureInstance>
+    <featureInstance name="startMainPage" category="eventPort" direction="out">
+      <feature xsi:type="aadl2:EventPort" href="../LoginScreen.aadl#//@ownedPublicSection/@ownedClassifier.5/@ownedEventPort.2"/>
+    </featureInstance>
+    <featureInstance name="loginResponse" dstConnectionInstance="//@connectionInstance.1" category="eventDataPort">
+      <feature xsi:type="aadl2:EventDataPort" href="../LoginScreen.aadl#//@ownedPublicSection/@ownedClassifier.5/@ownedEventDataPort.0"/>
+    </featureInstance>
+    <componentInstance name="usernameInputBox" category="device">
+      <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+        <property href="../../../Android_Properties.aadl#Android_Properties.android_type"/>
+        <ownedValue>
+          <ownedValue xsi:type="aadl2:NamedValue">
+            <namedValue xsi:type="aadl2:EnumerationLiteral" href="../../../Android_Properties.aadl#//@ownedProperty.3/@ownedPropertyType/@ownedLiteral.0"/>
+          </ownedValue>
+        </ownedValue>
+        <propertyAssociation href="../LoginScreen.aadl#//@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+      </ownedPropertyAssociation>
+      <featureInstance name="username" srcConnectionInstance="//@componentInstance.0/@connectionInstance.0" direction="out">
+        <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+          <property href="../../../../../Plugin_Resources/Data_Model.aadl#Data_Model.Data_Representation"/>
+          <ownedValue>
+            <ownedValue xsi:type="aadl2:NamedValue">
+              <namedValue xsi:type="aadl2:EnumerationLiteral" href="../../../../../Plugin_Resources/Data_Model.aadl#//@ownedProperty.4/@ownedPropertyType/@ownedLiteral.7"/>
+            </ownedValue>
+          </ownedValue>
+          <propertyAssociation href="../../../../../Plugin_Resources/Base_Types.aadl#//@ownedPublicSection/@ownedClassifier.15/@ownedPropertyAssociation.0"/>
+        </ownedPropertyAssociation>
+        <feature xsi:type="aadl2:DataPort" href="../LoginScreen.aadl#//@ownedPublicSection/@ownedClassifier.0/@ownedDataPort.0"/>
+      </featureInstance>
+      <subcomponent xsi:type="aadl2:DeviceSubcomponent" href="../LoginScreen.aadl#//@ownedPublicSection/@ownedClassifier.6/@ownedDeviceSubcomponent.0"/>
+      <index>0</index>
+    </componentInstance>
+    <componentInstance name="passwordInputBox" category="device">
+      <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+        <property href="../../../Android_Properties.aadl#Android_Properties.android_type"/>
+        <ownedValue>
+          <ownedValue xsi:type="aadl2:NamedValue">
+            <namedValue xsi:type="aadl2:EnumerationLiteral" href="../../../Android_Properties.aadl#//@ownedProperty.3/@ownedPropertyType/@ownedLiteral.1"/>
+          </ownedValue>
+        </ownedValue>
+        <propertyAssociation href="../LoginScreen.aadl#//@ownedPublicSection/@ownedClassifier.1/@ownedPropertyAssociation.0"/>
+      </ownedPropertyAssociation>
+      <featureInstance name="password" srcConnectionInstance="//@componentInstance.0/@connectionInstance.1" direction="out">
+        <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+          <property href="../../../../../Plugin_Resources/Data_Model.aadl#Data_Model.Data_Representation"/>
+          <ownedValue>
+            <ownedValue xsi:type="aadl2:NamedValue">
+              <namedValue xsi:type="aadl2:EnumerationLiteral" href="../../../../../Plugin_Resources/Data_Model.aadl#//@ownedProperty.4/@ownedPropertyType/@ownedLiteral.7"/>
+            </ownedValue>
+          </ownedValue>
+          <propertyAssociation href="../../../../../Plugin_Resources/Base_Types.aadl#//@ownedPublicSection/@ownedClassifier.15/@ownedPropertyAssociation.0"/>
+        </ownedPropertyAssociation>
+        <feature xsi:type="aadl2:DataPort" href="../LoginScreen.aadl#//@ownedPublicSection/@ownedClassifier.1/@ownedDataPort.0"/>
+      </featureInstance>
+      <subcomponent xsi:type="aadl2:DeviceSubcomponent" href="../LoginScreen.aadl#//@ownedPublicSection/@ownedClassifier.6/@ownedDeviceSubcomponent.1"/>
+      <index>0</index>
+    </componentInstance>
+    <componentInstance name="rememberMeCheckbox" category="device">
+      <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+        <property href="../../../Android_Properties.aadl#Android_Properties.android_type"/>
+        <ownedValue>
+          <ownedValue xsi:type="aadl2:NamedValue">
+            <namedValue xsi:type="aadl2:EnumerationLiteral" href="../../../Android_Properties.aadl#//@ownedProperty.3/@ownedPropertyType/@ownedLiteral.0"/>
+          </ownedValue>
+        </ownedValue>
+        <propertyAssociation href="../LoginScreen.aadl#//@ownedPublicSection/@ownedClassifier.2/@ownedPropertyAssociation.0"/>
+      </ownedPropertyAssociation>
+      <featureInstance name="rememberMe" srcConnectionInstance="//@componentInstance.0/@connectionInstance.2" direction="out">
+        <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+          <property href="../../../../../Plugin_Resources/Data_Model.aadl#Data_Model.Data_Representation"/>
+          <ownedValue>
+            <ownedValue xsi:type="aadl2:NamedValue">
+              <namedValue xsi:type="aadl2:EnumerationLiteral" href="../../../../../Plugin_Resources/Data_Model.aadl#//@ownedProperty.4/@ownedPropertyType/@ownedLiteral.1"/>
+            </ownedValue>
+          </ownedValue>
+          <propertyAssociation href="../../../../../Plugin_Resources/Base_Types.aadl#//@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+        </ownedPropertyAssociation>
+        <feature xsi:type="aadl2:DataPort" href="../LoginScreen.aadl#//@ownedPublicSection/@ownedClassifier.2/@ownedDataPort.0"/>
+      </featureInstance>
+      <subcomponent xsi:type="aadl2:DeviceSubcomponent" href="../LoginScreen.aadl#//@ownedPublicSection/@ownedClassifier.6/@ownedDeviceSubcomponent.2"/>
+      <index>0</index>
+    </componentInstance>
+    <componentInstance name="loginButton" category="device">
+      <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+        <property href="../../../Android_Properties.aadl#Android_Properties.android_type"/>
+        <ownedValue>
+          <ownedValue xsi:type="aadl2:NamedValue">
+            <namedValue xsi:type="aadl2:EnumerationLiteral" href="../../../Android_Properties.aadl#//@ownedProperty.3/@ownedPropertyType/@ownedLiteral.2"/>
+          </ownedValue>
+        </ownedValue>
+        <propertyAssociation href="../LoginScreen.aadl#//@ownedPublicSection/@ownedClassifier.3/@ownedPropertyAssociation.0"/>
+      </ownedPropertyAssociation>
+      <featureInstance name="startLoginProcess" srcConnectionInstance="//@componentInstance.0/@connectionInstance.3" category="eventPort" direction="out">
+        <feature xsi:type="aadl2:EventPort" href="../LoginScreen.aadl#//@ownedPublicSection/@ownedClassifier.3/@ownedEventPort.0"/>
+      </featureInstance>
+      <subcomponent xsi:type="aadl2:DeviceSubcomponent" href="../LoginScreen.aadl#//@ownedPublicSection/@ownedClassifier.6/@ownedDeviceSubcomponent.3"/>
+      <index>0</index>
+    </componentInstance>
+    <componentInstance name="signUpButton" category="device">
+      <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+        <property href="../../../Android_Properties.aadl#Android_Properties.android_type"/>
+        <ownedValue>
+          <ownedValue xsi:type="aadl2:NamedValue">
+            <namedValue xsi:type="aadl2:EnumerationLiteral" href="../../../Android_Properties.aadl#//@ownedProperty.3/@ownedPropertyType/@ownedLiteral.2"/>
+          </ownedValue>
+        </ownedValue>
+        <propertyAssociation href="../LoginScreen.aadl#//@ownedPublicSection/@ownedClassifier.4/@ownedPropertyAssociation.0"/>
+      </ownedPropertyAssociation>
+      <featureInstance name="startSignUpProcess" category="eventPort" direction="out">
+        <feature xsi:type="aadl2:EventPort" href="../LoginScreen.aadl#//@ownedPublicSection/@ownedClassifier.4/@ownedEventPort.0"/>
+      </featureInstance>
+      <subcomponent xsi:type="aadl2:DeviceSubcomponent" href="../LoginScreen.aadl#//@ownedPublicSection/@ownedClassifier.6/@ownedDeviceSubcomponent.4"/>
+      <index>0</index>
+    </componentInstance>
+    <componentInstance name="loginRequestGenerator" category="system">
+      <featureInstance name="username">
+        <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+          <property href="../../../../../Plugin_Resources/Data_Model.aadl#Data_Model.Data_Representation"/>
+          <ownedValue>
+            <ownedValue xsi:type="aadl2:NamedValue">
+              <namedValue xsi:type="aadl2:EnumerationLiteral" href="../../../../../Plugin_Resources/Data_Model.aadl#//@ownedProperty.4/@ownedPropertyType/@ownedLiteral.7"/>
+            </ownedValue>
+          </ownedValue>
+          <propertyAssociation href="../../../../../Plugin_Resources/Base_Types.aadl#//@ownedPublicSection/@ownedClassifier.15/@ownedPropertyAssociation.0"/>
+        </ownedPropertyAssociation>
+        <feature xsi:type="aadl2:DataPort" href="../LoginRequestGenerator.aadl#//@ownedPublicSection/@ownedClassifier.6/@ownedDataPort.0"/>
+      </featureInstance>
+      <featureInstance name="password">
+        <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+          <property href="../../../../../Plugin_Resources/Data_Model.aadl#Data_Model.Data_Representation"/>
+          <ownedValue>
+            <ownedValue xsi:type="aadl2:NamedValue">
+              <namedValue xsi:type="aadl2:EnumerationLiteral" href="../../../../../Plugin_Resources/Data_Model.aadl#//@ownedProperty.4/@ownedPropertyType/@ownedLiteral.7"/>
+            </ownedValue>
+          </ownedValue>
+          <propertyAssociation href="../../../../../Plugin_Resources/Base_Types.aadl#//@ownedPublicSection/@ownedClassifier.15/@ownedPropertyAssociation.0"/>
+        </ownedPropertyAssociation>
+        <feature xsi:type="aadl2:DataPort" href="../LoginRequestGenerator.aadl#//@ownedPublicSection/@ownedClassifier.6/@ownedDataPort.1"/>
+      </featureInstance>
+      <featureInstance name="loginRequest" direction="out">
+        <feature xsi:type="aadl2:DataPort" href="../LoginRequestGenerator.aadl#//@ownedPublicSection/@ownedClassifier.6/@ownedDataPort.2"/>
+      </featureInstance>
+      <featureInstance name="startRequest" dstConnectionInstance="//@componentInstance.0/@connectionInstance.3" category="eventPort">
+        <feature xsi:type="aadl2:EventPort" href="../LoginRequestGenerator.aadl#//@ownedPublicSection/@ownedClassifier.6/@ownedEventPort.0"/>
+      </featureInstance>
+      <componentInstance name="loginRequestGeneratorProcess" category="process">
+        <featureInstance name="username">
+          <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+            <property href="../../../../../Plugin_Resources/Data_Model.aadl#Data_Model.Data_Representation"/>
+            <ownedValue>
+              <ownedValue xsi:type="aadl2:NamedValue">
+                <namedValue xsi:type="aadl2:EnumerationLiteral" href="../../../../../Plugin_Resources/Data_Model.aadl#//@ownedProperty.4/@ownedPropertyType/@ownedLiteral.7"/>
+              </ownedValue>
+            </ownedValue>
+            <propertyAssociation href="../../../../../Plugin_Resources/Base_Types.aadl#//@ownedPublicSection/@ownedClassifier.15/@ownedPropertyAssociation.0"/>
+          </ownedPropertyAssociation>
+          <feature xsi:type="aadl2:DataPort" href="../LoginRequestGenerator.aadl#//@ownedPublicSection/@ownedClassifier.4/@ownedDataPort.0"/>
+        </featureInstance>
+        <featureInstance name="password">
+          <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+            <property href="../../../../../Plugin_Resources/Data_Model.aadl#Data_Model.Data_Representation"/>
+            <ownedValue>
+              <ownedValue xsi:type="aadl2:NamedValue">
+                <namedValue xsi:type="aadl2:EnumerationLiteral" href="../../../../../Plugin_Resources/Data_Model.aadl#//@ownedProperty.4/@ownedPropertyType/@ownedLiteral.7"/>
+              </ownedValue>
+            </ownedValue>
+            <propertyAssociation href="../../../../../Plugin_Resources/Base_Types.aadl#//@ownedPublicSection/@ownedClassifier.15/@ownedPropertyAssociation.0"/>
+          </ownedPropertyAssociation>
+          <feature xsi:type="aadl2:DataPort" href="../LoginRequestGenerator.aadl#//@ownedPublicSection/@ownedClassifier.4/@ownedDataPort.1"/>
+        </featureInstance>
+        <featureInstance name="loginRequest" direction="out">
+          <feature xsi:type="aadl2:DataPort" href="../LoginRequestGenerator.aadl#//@ownedPublicSection/@ownedClassifier.4/@ownedDataPort.2"/>
+        </featureInstance>
+        <componentInstance name="loginRequestGeneratorThread" category="thread">
+          <featureInstance name="username" dstConnectionInstance="//@componentInstance.0/@connectionInstance.0">
+            <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+              <property href="../../../../../Plugin_Resources/Data_Model.aadl#Data_Model.Data_Representation"/>
+              <ownedValue>
+                <ownedValue xsi:type="aadl2:NamedValue">
+                  <namedValue xsi:type="aadl2:EnumerationLiteral" href="../../../../../Plugin_Resources/Data_Model.aadl#//@ownedProperty.4/@ownedPropertyType/@ownedLiteral.7"/>
+                </ownedValue>
+              </ownedValue>
+              <propertyAssociation href="../../../../../Plugin_Resources/Base_Types.aadl#//@ownedPublicSection/@ownedClassifier.15/@ownedPropertyAssociation.0"/>
+            </ownedPropertyAssociation>
+            <feature xsi:type="aadl2:DataPort" href="../LoginRequestGenerator.aadl#//@ownedPublicSection/@ownedClassifier.2/@ownedDataPort.0"/>
+          </featureInstance>
+          <featureInstance name="password" dstConnectionInstance="//@componentInstance.0/@connectionInstance.1">
+            <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+              <property href="../../../../../Plugin_Resources/Data_Model.aadl#Data_Model.Data_Representation"/>
+              <ownedValue>
+                <ownedValue xsi:type="aadl2:NamedValue">
+                  <namedValue xsi:type="aadl2:EnumerationLiteral" href="../../../../../Plugin_Resources/Data_Model.aadl#//@ownedProperty.4/@ownedPropertyType/@ownedLiteral.7"/>
+                </ownedValue>
+              </ownedValue>
+              <propertyAssociation href="../../../../../Plugin_Resources/Base_Types.aadl#//@ownedPublicSection/@ownedClassifier.15/@ownedPropertyAssociation.0"/>
+            </ownedPropertyAssociation>
+            <feature xsi:type="aadl2:DataPort" href="../LoginRequestGenerator.aadl#//@ownedPublicSection/@ownedClassifier.2/@ownedDataPort.1"/>
+          </featureInstance>
+          <featureInstance name="loginRequest" direction="out">
+            <feature xsi:type="aadl2:DataPort" href="../LoginRequestGenerator.aadl#//@ownedPublicSection/@ownedClassifier.2/@ownedDataPort.2"/>
+          </featureInstance>
+          <subcomponent xsi:type="aadl2:ThreadSubcomponent" href="../LoginRequestGenerator.aadl#//@ownedPublicSection/@ownedClassifier.5/@ownedThreadSubcomponent.0"/>
+          <index>0</index>
+        </componentInstance>
+        <subcomponent xsi:type="aadl2:ProcessSubcomponent" href="../LoginRequestGenerator.aadl#//@ownedPublicSection/@ownedClassifier.7/@ownedProcessSubcomponent.0"/>
+        <index>0</index>
+      </componentInstance>
+      <subcomponent xsi:type="aadl2:SystemSubcomponent" href="../LoginScreen.aadl#//@ownedPublicSection/@ownedClassifier.6/@ownedSystemSubcomponent.0"/>
+      <index>0</index>
+    </componentInstance>
+    <componentInstance name="loginRequestHandler" category="system">
+      <featureInstance name="rememberMe">
+        <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+          <property href="../../../../../Plugin_Resources/Data_Model.aadl#Data_Model.Data_Representation"/>
+          <ownedValue>
+            <ownedValue xsi:type="aadl2:NamedValue">
+              <namedValue xsi:type="aadl2:EnumerationLiteral" href="../../../../../Plugin_Resources/Data_Model.aadl#//@ownedProperty.4/@ownedPropertyType/@ownedLiteral.1"/>
+            </ownedValue>
+          </ownedValue>
+          <propertyAssociation href="../../../../../Plugin_Resources/Base_Types.aadl#//@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+        </ownedPropertyAssociation>
+        <feature xsi:type="aadl2:DataPort" href="../LoginResultHandler.aadl#//@ownedPublicSection/@ownedClassifier.10/@ownedDataPort.0"/>
+      </featureInstance>
+      <featureInstance name="startMainPage" category="eventPort" direction="out">
+        <feature xsi:type="aadl2:EventPort" href="../LoginResultHandler.aadl#//@ownedPublicSection/@ownedClassifier.10/@ownedEventPort.0"/>
+      </featureInstance>
+      <featureInstance name="loginResult" category="eventDataPort">
+        <feature xsi:type="aadl2:EventDataPort" href="../LoginResultHandler.aadl#//@ownedPublicSection/@ownedClassifier.10/@ownedEventDataPort.0"/>
+      </featureInstance>
+      <componentInstance name="loginResultHandlerProcess" category="process">
+        <featureInstance name="rememberMe">
+          <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+            <property href="../../../../../Plugin_Resources/Data_Model.aadl#Data_Model.Data_Representation"/>
+            <ownedValue>
+              <ownedValue xsi:type="aadl2:NamedValue">
+                <namedValue xsi:type="aadl2:EnumerationLiteral" href="../../../../../Plugin_Resources/Data_Model.aadl#//@ownedProperty.4/@ownedPropertyType/@ownedLiteral.1"/>
+              </ownedValue>
+            </ownedValue>
+            <propertyAssociation href="../../../../../Plugin_Resources/Base_Types.aadl#//@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+          </ownedPropertyAssociation>
+          <feature xsi:type="aadl2:DataPort" href="../LoginResultHandler.aadl#//@ownedPublicSection/@ownedClassifier.8/@ownedDataPort.0"/>
+        </featureInstance>
+        <featureInstance name="loginResult">
+          <feature xsi:type="aadl2:DataPort" href="../LoginResultHandler.aadl#//@ownedPublicSection/@ownedClassifier.8/@ownedDataPort.1"/>
+        </featureInstance>
+        <featureInstance name="startMainPage" category="eventPort" direction="out">
+          <feature xsi:type="aadl2:EventPort" href="../LoginResultHandler.aadl#//@ownedPublicSection/@ownedClassifier.8/@ownedEventPort.0"/>
+        </featureInstance>
+        <componentInstance name="loginResultHandlerThread" category="thread">
+          <featureInstance name="rememberMe" dstConnectionInstance="//@componentInstance.0/@connectionInstance.2">
+            <ownedPropertyAssociation xsi:type="instance:PropertyAssociationInstance">
+              <property href="../../../../../Plugin_Resources/Data_Model.aadl#Data_Model.Data_Representation"/>
+              <ownedValue>
+                <ownedValue xsi:type="aadl2:NamedValue">
+                  <namedValue xsi:type="aadl2:EnumerationLiteral" href="../../../../../Plugin_Resources/Data_Model.aadl#//@ownedProperty.4/@ownedPropertyType/@ownedLiteral.1"/>
+                </ownedValue>
+              </ownedValue>
+              <propertyAssociation href="../../../../../Plugin_Resources/Base_Types.aadl#//@ownedPublicSection/@ownedClassifier.0/@ownedPropertyAssociation.0"/>
+            </ownedPropertyAssociation>
+            <feature xsi:type="aadl2:DataPort" href="../LoginResultHandler.aadl#//@ownedPublicSection/@ownedClassifier.6/@ownedDataPort.0"/>
+          </featureInstance>
+          <featureInstance name="loginResult">
+            <feature xsi:type="aadl2:DataPort" href="../LoginResultHandler.aadl#//@ownedPublicSection/@ownedClassifier.6/@ownedDataPort.1"/>
+          </featureInstance>
+          <featureInstance name="startMainPage" category="eventPort" direction="out">
+            <feature xsi:type="aadl2:EventPort" href="../LoginResultHandler.aadl#//@ownedPublicSection/@ownedClassifier.6/@ownedEventPort.0"/>
+          </featureInstance>
+          <subcomponent xsi:type="aadl2:ThreadSubcomponent" href="../LoginResultHandler.aadl#//@ownedPublicSection/@ownedClassifier.9/@ownedThreadSubcomponent.0"/>
+          <index>0</index>
+        </componentInstance>
+        <subcomponent xsi:type="aadl2:ProcessSubcomponent" href="../LoginResultHandler.aadl#//@ownedPublicSection/@ownedClassifier.11/@ownedProcessSubcomponent.0"/>
+        <index>0</index>
+      </componentInstance>
+      <subcomponent xsi:type="aadl2:SystemSubcomponent" href="../LoginScreen.aadl#//@ownedPublicSection/@ownedClassifier.6/@ownedSystemSubcomponent.1"/>
+      <index>0</index>
+    </componentInstance>
+    <connectionInstance name="usernameInputBox.username -> loginRequestGenerator.loginRequestGeneratorProcess.loginRequestGeneratorThread.username" complete="true" kind="portConnection" destination="//@componentInstance.0/@componentInstance.5/@componentInstance.0/@componentInstance.0/@featureInstance.0" source="//@componentInstance.0/@componentInstance.0/@featureInstance.0">
+      <connectionReference context="//@componentInstance.0" source="//@componentInstance.0/@componentInstance.0/@featureInstance.0" destination="//@componentInstance.0/@componentInstance.5/@featureInstance.0">
+        <connection xsi:type="aadl2:PortConnection" href="../LoginScreen.aadl#//@ownedPublicSection/@ownedClassifier.6/@ownedPortConnection.1"/>
+      </connectionReference>
+      <connectionReference context="//@componentInstance.0/@componentInstance.5" source="//@componentInstance.0/@componentInstance.5/@featureInstance.0" destination="//@componentInstance.0/@componentInstance.5/@componentInstance.0/@featureInstance.0">
+        <connection xsi:type="aadl2:PortConnection" href="../LoginRequestGenerator.aadl#//@ownedPublicSection/@ownedClassifier.7/@ownedPortConnection.0"/>
+      </connectionReference>
+      <connectionReference context="//@componentInstance.0/@componentInstance.5/@componentInstance.0" source="//@componentInstance.0/@componentInstance.5/@componentInstance.0/@featureInstance.0" destination="//@componentInstance.0/@componentInstance.5/@componentInstance.0/@componentInstance.0/@featureInstance.0">
+        <connection xsi:type="aadl2:PortConnection" href="../LoginRequestGenerator.aadl#//@ownedPublicSection/@ownedClassifier.5/@ownedPortConnection.0"/>
+      </connectionReference>
+    </connectionInstance>
+    <connectionInstance name="passwordInputBox.password -> loginRequestGenerator.loginRequestGeneratorProcess.loginRequestGeneratorThread.password" complete="true" kind="portConnection" destination="//@componentInstance.0/@componentInstance.5/@componentInstance.0/@componentInstance.0/@featureInstance.1" source="//@componentInstance.0/@componentInstance.1/@featureInstance.0">
+      <connectionReference context="//@componentInstance.0" source="//@componentInstance.0/@componentInstance.1/@featureInstance.0" destination="//@componentInstance.0/@componentInstance.5/@featureInstance.1">
+        <connection xsi:type="aadl2:PortConnection" href="../LoginScreen.aadl#//@ownedPublicSection/@ownedClassifier.6/@ownedPortConnection.2"/>
+      </connectionReference>
+      <connectionReference context="//@componentInstance.0/@componentInstance.5" source="//@componentInstance.0/@componentInstance.5/@featureInstance.1" destination="//@componentInstance.0/@componentInstance.5/@componentInstance.0/@featureInstance.1">
+        <connection xsi:type="aadl2:PortConnection" href="../LoginRequestGenerator.aadl#//@ownedPublicSection/@ownedClassifier.7/@ownedPortConnection.1"/>
+      </connectionReference>
+      <connectionReference context="//@componentInstance.0/@componentInstance.5/@componentInstance.0" source="//@componentInstance.0/@componentInstance.5/@componentInstance.0/@featureInstance.1" destination="//@componentInstance.0/@componentInstance.5/@componentInstance.0/@componentInstance.0/@featureInstance.1">
+        <connection xsi:type="aadl2:PortConnection" href="../LoginRequestGenerator.aadl#//@ownedPublicSection/@ownedClassifier.5/@ownedPortConnection.1"/>
+      </connectionReference>
+    </connectionInstance>
+    <connectionInstance name="rememberMeCheckbox.rememberMe -> loginRequestHandler.loginResultHandlerProcess.loginResultHandlerThread.rememberMe" complete="true" kind="portConnection" destination="//@componentInstance.0/@componentInstance.6/@componentInstance.0/@componentInstance.0/@featureInstance.0" source="//@componentInstance.0/@componentInstance.2/@featureInstance.0">
+      <connectionReference context="//@componentInstance.0" source="//@componentInstance.0/@componentInstance.2/@featureInstance.0" destination="//@componentInstance.0/@componentInstance.6/@featureInstance.0">
+        <connection xsi:type="aadl2:PortConnection" href="../LoginScreen.aadl#//@ownedPublicSection/@ownedClassifier.6/@ownedPortConnection.3"/>
+      </connectionReference>
+      <connectionReference context="//@componentInstance.0/@componentInstance.6" source="//@componentInstance.0/@componentInstance.6/@featureInstance.0" destination="//@componentInstance.0/@componentInstance.6/@componentInstance.0/@featureInstance.0">
+        <connection xsi:type="aadl2:PortConnection" href="../LoginResultHandler.aadl#//@ownedPublicSection/@ownedClassifier.11/@ownedPortConnection.0"/>
+      </connectionReference>
+      <connectionReference context="//@componentInstance.0/@componentInstance.6/@componentInstance.0" source="//@componentInstance.0/@componentInstance.6/@componentInstance.0/@featureInstance.0" destination="//@componentInstance.0/@componentInstance.6/@componentInstance.0/@componentInstance.0/@featureInstance.0">
+        <connection xsi:type="aadl2:PortConnection" href="../LoginResultHandler.aadl#//@ownedPublicSection/@ownedClassifier.9/@ownedPortConnection.0"/>
+      </connectionReference>
+    </connectionInstance>
+    <connectionInstance name="loginButton.startLoginProcess -> loginRequestGenerator.startRequest" complete="true" kind="portConnection" destination="//@componentInstance.0/@componentInstance.5/@featureInstance.3" source="//@componentInstance.0/@componentInstance.3/@featureInstance.0">
+      <connectionReference context="//@componentInstance.0" source="//@componentInstance.0/@componentInstance.3/@featureInstance.0" destination="//@componentInstance.0/@componentInstance.5/@featureInstance.3">
+        <connection xsi:type="aadl2:PortConnection" href="../LoginScreen.aadl#//@ownedPublicSection/@ownedClassifier.6/@ownedPortConnection.0"/>
+      </connectionReference>
+    </connectionInstance>
+    <subcomponent xsi:type="aadl2:SystemSubcomponent" href="../MobileApplication.aadl#//@ownedPublicSection/@ownedClassifier.1/@ownedSystemSubcomponent.0"/>
+    <index>0</index>
+  </componentInstance>
+  <connectionInstance name="launchApplication -> loginScreen.startPage" kind="portConnection" destination="//@componentInstance.0/@featureInstance.1" source="//@featureInstance.3">
+    <connectionReference context="/" source="//@featureInstance.3" destination="//@componentInstance.0/@featureInstance.1">
+      <connection xsi:type="aadl2:PortConnection" href="../MobileApplication.aadl#//@ownedPublicSection/@ownedClassifier.1/@ownedPortConnection.0"/>
+    </connectionReference>
+  </connectionInstance>
+  <connectionInstance name="loginResponse -> loginScreen.loginResponse" kind="portConnection" destination="//@componentInstance.0/@featureInstance.4" source="//@featureInstance.4">
+    <connectionReference context="/" source="//@featureInstance.4" destination="//@componentInstance.0/@featureInstance.4">
+      <connection xsi:type="aadl2:PortConnection" href="../MobileApplication.aadl#//@ownedPublicSection/@ownedClassifier.1/@ownedPortConnection.2"/>
+    </connectionReference>
+  </connectionInstance>
+  <connectionInstance name="loginScreen.loginRequest -> loginRequest" kind="portConnection" destination="//@featureInstance.0" source="//@componentInstance.0/@featureInstance.0">
+    <connectionReference context="/" source="//@componentInstance.0/@featureInstance.0" destination="//@featureInstance.0">
+      <connection xsi:type="aadl2:PortConnection" href="../MobileApplication.aadl#//@ownedPublicSection/@ownedClassifier.1/@ownedPortConnection.1"/>
+    </connectionReference>
+  </connectionInstance>
+  <systemOperationMode name="No Modes"/>
+  <componentImplementation xsi:type="aadl2:SystemImplementation" href="../MobileApplication.aadl#MobileApplication.mobile_application.impl"/>
+</instance:SystemInstance>

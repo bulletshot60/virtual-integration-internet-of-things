@@ -1,0 +1,67 @@
+package LoginScreen
+public
+	with Base_Types, Android_Properties, LoginRequestGenerator, LoginResultHandler, Shared;
+	
+	device username_field
+		features
+			username: out data port Base_Types::String;
+		properties
+			Android_Properties::android_type => InputBox;
+	end username_field;
+	
+	device password_field
+		features
+			password: out data port Base_Types::String;
+		properties
+			Android_Properties::android_type => PasswordInputBox;
+	end password_field;
+	
+	device remember_me_field
+		features
+			rememberMe:	out data port Base_Types::Boolean;
+		properties
+			Android_Properties::android_type => InputBox;
+	end remember_me_field;
+	
+	device login_button
+		features
+			startLoginProcess: out event port;
+		properties
+			Android_Properties::android_type => Button;
+	end login_button;
+	
+	device sign_up_button
+		features
+			startSignUpProcess: out event port;
+		properties
+			Android_Properties::android_type => Button;
+	end sign_up_button;
+	
+	system login_screen
+		features
+			startPage: in event port;
+			startSignupPage: out event port;
+			startMainPage: out event port;
+			loginRequest: out data port Shared::user_login_request.impl;
+			loginResponse: in event data port Shared::user_login_result.impl;
+	end login_screen;
+	
+	system implementation login_screen.impl
+		subcomponents
+			usernameInputBox: device username_field;
+			passwordInputBox: device password_field;
+			rememberMeCheckbox: device remember_me_field;
+			loginButton: device login_button;
+			signUpButton: device sign_up_button;
+			loginRequestGenerator: system LoginRequestGenerator::login_request_generator.impl;
+			loginRequestHandler: system LoginResultHandler::login_result_handler.impl;
+		connections
+			loginButtonToRequestGenerator: port loginButton.startLoginProcess -> loginRequestGenerator.startRequest;
+			usernameInputToRequestGenerator: port usernameInputBox.username -> loginRequestGenerator.username;
+			passwordInputToRequestGenerator: port passwordInputBox.password -> loginRequestGenerator.password;
+			rememberMeToLoginHanlder: port rememberMeCheckbox.rememberMe -> loginRequestHandler.rememberMe;
+			signUpButtonToSignUpPage: port signUpButton.startSignUpProcess -> startSignupPage;
+			loginHandlerToMainPage: port loginRequestHandler.startMainPage -> startMainPage;
+	end login_screen.impl;
+	
+end LoginScreen;

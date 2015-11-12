@@ -27,7 +27,7 @@ public
 	data implementation user_login_result.impl
 		subcomponents
 			success: data Base_Types::Boolean;
-			failure_message: data Base_Types::String;
+			failureMessage: data Base_Types::String;
 			user: data user.impl;
 	end user_login_result.impl;
 	

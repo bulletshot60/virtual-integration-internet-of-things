@@ -1,0 +1,13 @@
+package MobilePlatform
+public
+	
+	system mobile_platform
+		features
+			launchApplication: out event port;
+	end mobile_platform;
+	
+	system implementation mobile_platform.impl
+		
+	end mobile_platform.impl;
+	
+end MobilePlatform;
