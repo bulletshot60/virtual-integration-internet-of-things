@@ -22,8 +22,32 @@ public
 			--loginRequestToLoginHandler: port loginRequest -> loginHandler.loginRequest;
 			--loginHandlerToLoginResponse: port loginHandler.loginResult -> loginResponse;
 		annex agree {**
-			assert communicatorOut = 3;
+			assert communicatorOut = 1;
 		**};
 	end server_application.impl;
+	
+	system evil_application
+		features
+			--launchApplication: in event port;
+			--loginRequest: in event data port Shared::user_login_request.impl;
+			--loginResponse: out data port Shared::user_login_result.impl;
+			communicatorIn: in data port Base_Types::Integer;
+			communicatorOut: out data port Base_Types::Integer;
+		annex agree {**
+			assume "in is 2": communicatorIn = 2;
+			guarantee "out is 3": communicatorOut = 3;
+		**};
+	end evil_application;
+	
+	system implementation evil_application.impl
+		--subcomponents
+			--loginHandler: system LoginHandler::login_handler.impl;
+		--connections
+			--loginRequestToLoginHandler: port loginRequest -> loginHandler.loginRequest;
+			--loginHandlerToLoginResponse: port loginHandler.loginResult -> loginResponse;
+		annex agree {**
+			assert communicatorOut = 3;
+		**};
+	end evil_application.impl;
 	
 end ServerApplication;

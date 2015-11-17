@@ -2,7 +2,7 @@ package MobileApplication
 public
 	with LoginScreen, Shared, Base_Types;
 	
-	system mobile_application
+	system mobile_application_sender
 		features
 			--launchApplication: in event port;
 			--loginRequest: out data port Shared::user_login_request.impl;
@@ -10,12 +10,11 @@ public
 			communicatorIn: in data port Base_Types::Integer;
 			communicatorOut: out data port Base_Types::Integer;
 		annex agree {**
-			assume "in is 1": communicatorIn = 1;
 			guarantee "out is 2": communicatorOut = 2;
 		**};
-	end mobile_application;
+	end mobile_application_sender;
 	
-	system implementation mobile_application.impl
+	system implementation mobile_application_sender.impl
 		--subcomponents
 			--loginScreen: system LoginScreen::login_screen.impl;
 		--connections
@@ -25,6 +24,29 @@ public
 		annex agree {**
 			assert communicatorOut = 2;
 		**};
-	end mobile_application.impl;
+	end mobile_application_sender.impl;
+	
+	system mobile_application_receiver
+		features
+			--launchApplication: in event port;
+			--loginRequest: out data port Shared::user_login_request.impl;
+			--loginResponse: in event data port Shared::user_login_result.impl;
+			communicatorIn: in data port Base_Types::Integer;
+		annex agree {**
+			assume "in is 1": communicatorIn = 1;
+		**};
+	end mobile_application_receiver;
+	
+	system implementation mobile_application_receiver.impl
+		--subcomponents
+			--loginScreen: system LoginScreen::login_screen.impl;
+		--connections
+			--launchApplicationToStartPage: port launchApplication -> loginScreen.startPage;
+			--loginPageToServer: port loginScreen.loginRequest -> loginRequest;
+			--serverToLoginPage: port loginResponse -> loginScreen.loginResponse;
+		annex agree {**
+			assert true;
+		**};
+	end mobile_application_receiver.impl;
 	
 end MobileApplication;
